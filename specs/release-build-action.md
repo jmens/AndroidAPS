@@ -28,7 +28,7 @@ Startdialog angegeben werden. Der Fork selbst muss dafür nicht aktuell gehalten
 3. Nutzer als Collaborator mit `write` hinzufügen.
 
 ## Bedienung
-1. `github.com/<fork>/actions` → Workflow **Build Release APK** → *Run workflow*.
+1. `github.com/<fork>/actions` → Workflow **Ullis Signed Release** → *Run workflow*.
 2. Optional: Feld `tag` mit gewünschter Version füllen (z.B. `3.4.2.6`); leer lassen = neueste.
 3. Warten bis Lauf grün.
 4. Fork-Startseite → *Releases* → APK herunterladen.
