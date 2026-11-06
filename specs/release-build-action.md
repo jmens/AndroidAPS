@@ -2,12 +2,13 @@
 
 ## Warum
 Ein nicht-technischer Nutzer soll signierte AAPS-APKs (fullRelease) erstellen können, ohne lokale
-Build-Umgebung. Lösung: GitHub Action in einem Fork. Die Action baut immer den Commit, der upstream
-(nightscout/AndroidAPS) als letztes als Release getaggt wurde — der Fork selbst muss dafür nicht
-aktuell gehalten werden.
+Build-Umgebung. Lösung: GitHub Action in einem Fork. Die Action baut standardmäßig den Commit, der
+upstream (nightscout/AndroidAPS) als letztes als Release getaggt wurde; optional kann ein Tag im
+Startdialog angegeben werden. Der Fork selbst muss dafür nicht aktuell gehalten werden.
 
 ## Was die Action tut (`build-release.yml`)
-1. Ermittelt neuesten Release-Tag der Upstream-API.
+1. Ermittelt den zu bauenden Tag: Eingabefeld `tag` falls ausgefüllt, sonst neuester Release-Tag
+   der Upstream-API.
 2. Checkt nightscout/AndroidAPS an diesem Tag aus (nicht den Fork).
 3. Baut `assembleFullRelease` mit JDK 21.
 4. Signiert die APK mit dem Keystore aus den Repo-Secrets.
@@ -27,9 +28,10 @@ aktuell gehalten werden.
 3. Nutzer als Collaborator mit `write` hinzufügen.
 
 ## Bedienung
-1. `github.com/<fork>/actions` → Workflow **Build Release APK** → *Run workflow* → Klick.
-2. Warten bis Lauf grün.
-3. Fork-Startseite → *Releases* → APK herunterladen.
+1. `github.com/<fork>/actions` → Workflow **Build Release APK** → *Run workflow*.
+2. Optional: Feld `tag` mit gewünschter Version füllen (z.B. `3.4.2.6`); leer lassen = neueste.
+3. Warten bis Lauf grün.
+4. Fork-Startseite → *Releases* → APK herunterladen.
 
 ## Haltbarkeit
 - Neue AAPS-Versionen, die JDK 21 benötigen (ab 3.3), funktionieren ohne Anpassung. Für künftige

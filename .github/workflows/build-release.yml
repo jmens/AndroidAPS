@@ -2,7 +2,11 @@ name: Build Release APK
 
 on:
   workflow_dispatch:
-
+    inputs:
+      tag:
+        description: 'Upstream release tag to build (e.g. 4.0.0). Leave empty for latest release.'
+        required: false
+        default: ''
 permissions:
   contents: write
 
@@ -14,12 +18,18 @@ jobs:
     name: Build and sign fullRelease
     runs-on: ubuntu-latest
     steps:
-      - name: Determine latest release tag
+      - name: Determine release tag
         id: tag
+        env:
+          TAG_INPUT: ${{ inputs.tag }}
         run: |
-          TAG=$(curl -s "https://api.github.com/repos/${UPSTREAM_REPO}/releases/latest" | jq -r '.tag_name')
+          if [ -n "$TAG_INPUT" ]; then
+            TAG="$TAG_INPUT"
+          else
+            TAG=$(curl -s "https://api.github.com/repos/${UPSTREAM_REPO}/releases/latest" | jq -r '.tag_name')
+          fi
           if [ -z "$TAG" ] || [ "$TAG" = "null" ]; then
-            echo "Could not determine latest release tag of ${UPSTREAM_REPO}"
+            echo "Could not determine release tag of ${UPSTREAM_REPO}"
             exit 1
           fi
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
