@@ -70,7 +70,7 @@ jobs:
             --ks-key-alias "${{ secrets.KEY_ALIAS }}" \
             --out "AAPS-$VERSION-signed.apk" \
             "$APK_IN"
-          echo "apk=AAPS-$VERSION-signed.apk" >> "$GITHUB_ENV"
+          echo "APK=AAPS-$VERSION-signed.apk" >> "$GITHUB_ENV"
 
       - name: Create GitHub release with APK
         env:
